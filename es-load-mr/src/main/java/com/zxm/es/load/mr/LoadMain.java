@@ -22,7 +22,6 @@ public class LoadMain {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         Configuration conf = new Configuration();
 
-
         conf.setBoolean("mapred.map.tasks.speculative.execution", false);
         conf.setBoolean("mapred.reduce.tasks.speculative.execution", false);
         conf.set("es.input.json", "yes");
@@ -35,17 +34,10 @@ public class LoadMain {
         job.setMapperClass(LoadMapper.class);
         job.setOutputFormatClass(EsOutputFormat.class);
 
-//        job.setInputFormatClass(TextInputFormat.class);
-
-
         job.setNumReduceTasks(0);
 
-//        job.setOutputKeyClass(NullWritable.class);
-//        job.setOutputValueClass(Text.class);
         job.setMapOutputKeyClass(NullWritable.class);
         job.setMapOutputValueClass(BytesWritable.class);
-
-
 
         FileInputFormat.addInputPath(job, new Path(args[0]));
         job.setSpeculativeExecution(false);

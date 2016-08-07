@@ -21,13 +21,6 @@ public class LoadMapper extends Mapper<LongWritable, Text, NullWritable, BytesWr
     protected void map(LongWritable key, Text value, Context context)
             throws IOException, InterruptedException {
 
-        log.info("============================= Key : \n" + key.toString());
-        System.out.println("============================= Key : \n" + key.toString());
-//        JSONObject obj = (JSONObject) JSONValue.parse(value.toString());
-//        obj.put("id", getLongId());
-        System.out.println("============================= Value : \n" + value.toString());;
-        log.info("============================= Value : \n" + value.toString());
-
         byte[] source = value.toString().replaceAll("[\\x00-\\x09\\x11\\x12\\x14-\\x1F\\x7F]", "").getBytes();
         BytesWritable jsonDoc = new BytesWritable(source);
         context.write(NullWritable.get(), jsonDoc);

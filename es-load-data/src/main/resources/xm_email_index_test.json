@@ -1,0 +1,42 @@
+//PUT /xm_email_index_1 HTTP/1.1
+//Host: node1:9200
+//Content-Type: application/json
+//Cache-Control: no-cache
+//Postman-Token: efd7e10c-b8d8-b94a-ffbc-0df1737f6b87
+
+{
+  "settings": {
+    "refresh_interval": "5s",
+    "number_of_shards": 20,
+    "number_of_replicas": 0
+  },
+  "mappings": {
+    "_default_": {
+      "_all": {
+        "enabled": false
+      }
+    },
+    "resource": {
+      "dynamic": false,
+      "properties": {
+        "DATA_TYPE": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "PROTOCOL_TYPE": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "CONTENT": {
+          "index": "analyzed",
+          "fields": {
+            "cn": {
+              "type": "string",
+              "analyzer": "ik"
+            }
+          }
+        }
+      }
+    }
+  }
+}
